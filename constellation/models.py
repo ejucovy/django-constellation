@@ -28,6 +28,7 @@ class Stream(models.Model):
     group = models.ForeignKey(Group)
 
     def update_planet(self):
+        template_writer(self)
         run_planet(self.config_file())
 
     def render_to_response(self):
@@ -36,16 +37,17 @@ class Stream(models.Model):
         return render_to_response(template, context)
 
     def config_dir(self):
-        return '%s/%s' % (
+        return os.path.join(
             settings.PLANET_CONFIG_DIR,
             self.group.name)
 
     def config_file(self):
-        return "%s/config.ini" % self.config_dir()
+        return os.path.join(self.config_dir(), "config.ini")
 
     def output_dir(self):
-        return '%s/planet_output/%s' % (settings.PLANET_OUTPUT_DIR,
-                                        self.group.name)
+        return os.path.join(settings.PLANET_OUTPUT_DIR,
+                            'planet_output',
+                            self.group.name)
 
     def output_template(self):
         return 'planet_output/%s/index.html' % self.group.name
@@ -67,9 +69,7 @@ site.register(Link)
 
 import constellation.settings
 
-def template_writer(sender, instance, created, **kwargs):
-    stream = instance
-
+def template_writer(stream):
     try:
         PLANET_TEMPLATE_FILES = settings.PLANET_TEMPLATE_FILES
     except AttributeError:
@@ -90,15 +90,8 @@ def template_writer(sender, instance, created, **kwargs):
 
     output_dir = stream.output_dir()
     if not os.path.exists(output_dir):
-        os.mkdir(output_dir)
+        os.makedirs(output_dir)
         
     fp = open('%s/config.ini' % config_dir, 'w')
     fp.write(output)
     fp.close()
-
-def template_writer_feed(sender, instance, created, **kwargs):
-    return template_writer(sender, instance.stream, created, **kwargs)
-
-models.signals.post_save.connect(template_writer_feed, sender=Feed)
-models.signals.post_save.connect(template_writer, sender=Stream)
-
