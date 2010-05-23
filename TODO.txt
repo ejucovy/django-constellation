@@ -1,0 +1,25 @@
+This should be split apart into four autonomous packages:
+
+ 1. The contents of constellation.lib are a fork of planet's
+    distributed planet.py script, wrapped in a Python function.
+    It should be merged into planet itself and planet.py should
+    be refactored to use this function.
+
+ 2. A Deliverance-friendly Planet output template, intended to
+    be used as a base and forked.
+
+ 3. Constellation itself: that is, the Planet farm; admin interface
+    to managing a Planet configuration (writing configuration files
+    from a Django template); API for updating a managed Planet and
+    bulk updating script; and serving of the published planet output.
+    
+ 4. Social features: overriding the base Planet template with a
+    Django template that layers dynamic social features (commenting,
+    liking, archiving) on top of river items.
+
+Also things should be added:
+
+ * An activity stream
+ * Tagging of items in the linkbank
+ * Tagging of channels (with fed items inheriting tags from their
+   source channel)
