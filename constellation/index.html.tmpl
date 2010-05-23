@@ -77,9 +77,12 @@
 {% can_comment by user in group as permission %}
 {% if permission %}
 <div id="add_comment">
-  <a href="/admin/constellation/comment/add/?group={{group.id}}&for_uri=<TMPL_VAR link ESCAPE="HTML">">
-    Comment on this
-  </a>
+  <form method="POST" action="{% url group_comment group.id %}">
+    <input type="hidden" name="uri"
+	   value="<TMPL_VAR link ESCAPE="HTML">"></input>
+    <textarea name="text"></textarea>
+    <input type="submit" value="Comment on this"></input>
+  </form>
 </div>
 
 <div id="add_link">

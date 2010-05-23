@@ -12,7 +12,7 @@ from djangohelpers.lib import allow_http
 
 from django.contrib.auth.models import Group
 
-from constellation.models import Stream, Link
+from constellation.models import Stream, Link, Comment
 
 def stream(request, gid):
     stream = get_object_or_404(Stream, group__id=gid)
@@ -23,6 +23,17 @@ def stream(request, gid):
 
 def forbidden():
     return HttpResponseForbidden()
+
+@allow_http("POST")
+def comment(request, gid):
+    group = get_object_or_404(Group, id=gid)
+    if group not in request.user.groups.all():
+        return forbidden()    
+    uri = request.POST.get('uri')
+    text = request.POST.get('text')
+    comment = Comment(for_uri=uri, text=text, group=group)
+    comment.save()
+    return HttpResponseRedirect(reverse('group_stream', args=[gid]))
 
 @allow_http("GET", "POST")
 def links(request, gid):
