@@ -1,0 +1,11 @@
+<h1>Group: {{group.name}}</h1>
+
+<ul>
+  <li>
+    <a href="{% url group_stream group.id %}">See its planet</a>
+  </li>
+
+  <li>
+    <a href="{% url group_links group.id %}">See its links</a>
+  </li>
+</ul>

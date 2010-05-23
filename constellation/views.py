@@ -21,14 +21,14 @@ def stream(request, gid):
 
     #return HttpResponse(open(stream.output_dir() + '/index.html').read())
 
-@rendered_with('webhub/links.html')
+@rendered_with('constellation/links.html')
 def links(request, gid):
     group = get_object_or_404(Group, id=gid)
     links = Link.objects.filter(group=group)
 
     return {'links': links, 'group': group}
 
-@rendered_with('webhub/group.html')
+@rendered_with('constellation/group.html')
 def group(request, gid):
     group = get_object_or_404(Group, id=gid)
     return {'group': group}

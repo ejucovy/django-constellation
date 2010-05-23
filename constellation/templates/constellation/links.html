@@ -1,0 +1,18 @@
+{% load constellation_comments %}
+
+<h1>{{group.name}}'s Links</h1>
+
+<ul>
+{% for link in links %}
+<li>
+  {% with link.uri as uri %}
+  <a href="{{uri}}">{{uri}}</a>
+  {% get_comments for uri in group as comments %}
+  {% if comments %}
+  -- {{comments|length}} comment(s)
+  {% endif %}
+  {% endwith %}
+</li>
+{% endfor %}
+
+</ul>
