@@ -86,7 +86,7 @@ div#add_comment, div#add_link, div#comments {
 <div id="add_comment">
   <form method="POST" action="{% url group_comment group.id %}">
     <input type="hidden" name="uri"
-	   value="<TMPL_VAR link ESCAPE="HTML">"></input>
+	   value="<TMPL_VAR link ESCAPE="URL">"></input>
     <textarea name="text"></textarea>
     <input type="submit" value="Comment on this"></input>
   </form>
@@ -95,15 +95,15 @@ div#add_comment, div#add_link, div#comments {
 <div id="add_link">
   <form method="POST" action="{% url group_links group.id %}">
     <input type="hidden" name="uri"
-	   value="<TMPL_VAR link ESCAPE="HTML">"></input>
+	   value="<TMPL_VAR link ESCAPE="URL">"></input>
     <input type="submit" value="Archive this"></input>
   </form>
 </div>
 {% endif %}
 
 <div id="comments">
-{% get_comments for "<TMPL_VAR link ESCAPE="HTML">" in group as comments %}
-<a href="{% url group_comment group.id %}?uri=<TMPL_VAR link ESCAPE="HTML">">
+{% get_comments for "<TMPL_VAR link ESCAPE="URL">" in group as comments %}
+<a href="{% url group_comment group.id %}?uri=<TMPL_VAR link ESCAPE="URL">">
     {{comments|length}} comment(s)
 </a>
 {% for comment in comments %}
