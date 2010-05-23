@@ -28,10 +28,7 @@ class Stream(models.Model):
     group = models.ForeignKey(Group)
 
     def update_planet(self):
-        import pdb; pdb.set_trace()
         run_planet(self.config_file())
-        #cmd = settings.PLANET_EXECUTABLE_CMD + [self.config_file()]
-        #subprocess.call(cmd)
 
     def render_to_response(self):
         template = self.output_template()
@@ -47,13 +44,11 @@ class Stream(models.Model):
         return "%s/config.ini" % self.config_dir()
 
     def output_dir(self):
-        return '%s/%s/%s' % (settings.PLANET_OUTPUT_DIR,
-                             settings.PLANET_TEMPLATE_DIR,
-                             self.group.name)
+        return '%s/planet_output/%s' % (settings.PLANET_OUTPUT_DIR,
+                                        self.group.name)
 
     def output_template(self):
-        return '%s/%s/index.html' % (
-            settings.PLANET_TEMPLATE_DIR, self.group.name)
+        return 'planet_output/%s/index.html' % self.group.name
 
 class Feed(models.Model):
     url = CharField()
