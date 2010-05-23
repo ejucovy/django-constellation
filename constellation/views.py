@@ -67,6 +67,29 @@ def index(request):
 @allow_http("GET", "POST")
 @rendered_with('constellation/feeds.html')
 def feeds(request, gid):
+    if request.method == "POST":
+        return update_feeds(request, gid)
     group = get_object_or_404(Group, id=gid)
     feeds = Feed.objects.filter(stream__group=group)
-    return {'feeds': feeds, 'group': group}
+    return {'feeds': feeds, 'group': group, 'user': request.user}
+
+@allow_http("POST")
+def update_feeds(request, gid):
+    stream = get_object_or_404(Stream, group__id=gid)
+    group = stream.group
+    if group not in request.user.groups.all():
+        return forbidden()
+    if request.POST.has_key('delete'):
+        id = request.POST.get('feed_id')
+        try:
+            feed = Feed.objects.get(stream=stream, id=id)
+        except Feed.DoesNotExist:
+            return HttpResponseRedirect('.')
+        feed.delete()
+    if request.POST.has_key('add'):
+        url = request.POST.get('feed_url')
+        title = request.POST.get('feed_title')
+        feed = Feed(url=url, title=title, stream=stream)
+        feed.save()
+    stream.update_planet()
+    return HttpResponseRedirect(reverse('group_stream', args=[group.id]))
