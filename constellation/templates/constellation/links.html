@@ -9,7 +9,9 @@
   <a href="{{uri}}">{{uri}}</a>
   {% get_comments for uri in group as comments %}
   {% if comments %}
-  -- {{comments|length}} comment(s)
+  -- <a href="{% url group_comment group.id %}?uri={{uri}}">
+    {{comments|length}} comment(s)
+    </a>
   {% endif %}
   {% endwith %}
 </li>

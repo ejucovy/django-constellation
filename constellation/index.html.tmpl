@@ -103,6 +103,9 @@ div#add_comment, div#add_link, div#comments {
 
 <div id="comments">
 {% get_comments for "<TMPL_VAR link ESCAPE="HTML">" in group as comments %}
+<a href="{% url group_comment group.id %}?uri=<TMPL_VAR link ESCAPE="HTML">">
+    {{comments|length}} comment(s)
+</a>
 {% for comment in comments %}
 <p style="border: 2px dotted red;">
   {{comment.text}}

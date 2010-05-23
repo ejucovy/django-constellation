@@ -24,8 +24,19 @@ def stream(request, gid):
 def forbidden():
     return HttpResponseForbidden()
 
-@allow_http("POST")
+@allow_http("GET")
+@rendered_with("constellation/comments.html")
+def show_comments(request, gid, url):
+    group = get_object_or_404(Group, id=gid)
+    comments = Comment.objects.filter(group=group,
+                                      for_uri=url)
+    return {'group': group, 'comments': comments, 'url': url}
+
+@allow_http("GET", "POST")
 def comment(request, gid):
+    if request.GET.has_key("uri"): 
+        return show_comments(request, gid, request.GET.get("uri"))
+
     group = get_object_or_404(Group, id=gid)
     if group not in request.user.groups.all():
         return forbidden()    

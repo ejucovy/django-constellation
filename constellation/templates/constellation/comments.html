@@ -1,0 +1,9 @@
+<h1>Group: {{group.name}}</h1>
+
+<h2>Comments on <a href="{{url}}">{{url}}</a></h2>
+
+{% for comment in comments %}
+<div>
+{{comment.text}}
+</div>
+{% endfor %}
