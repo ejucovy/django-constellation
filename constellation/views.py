@@ -21,8 +21,23 @@ def stream(request, gid):
 
     #return HttpResponse(open(stream.output_dir() + '/index.html').read())
 
-@rendered_with('constellation/links.html')
+def forbidden():
+    return HttpResponseForbidden()
+
+@allow_http("GET", "POST")
 def links(request, gid):
+    if request.method == "GET": return show_links(request, gid)
+    group = get_object_or_404(Group, id=gid)
+    if group not in request.user.groups.all():
+        return forbidden()
+    uri = request.POST.get('uri')
+    link = Link(uri=uri, group=group)
+    link.save()
+    return HttpResponseRedirect('.')
+
+@allow_http("GET")
+@rendered_with('constellation/links.html')
+def show_links(request, gid):
     group = get_object_or_404(Group, id=gid)
     links = Link.objects.filter(group=group)
 

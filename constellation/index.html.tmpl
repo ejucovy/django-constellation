@@ -83,9 +83,11 @@
 </div>
 
 <div id="add_link">
-  <a href="/admin/constellation/link/add/?group={{group.id}}&uri=<TMPL_VAR link ESCAPE="HTML">">
-    Archive this
-  </a>
+  <form method="POST" action="{% url group_links group.id %}">
+    <input type="hidden" name="uri"
+	   value="<TMPL_VAR link ESCAPE="HTML">"></input>
+    <input type="submit" value="Archive this"></input>
+  </form>
 </div>
 {% endif %}
 
