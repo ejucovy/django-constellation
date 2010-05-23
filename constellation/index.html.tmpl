@@ -39,7 +39,7 @@
 ### to be cautious and HTML-escape any illegal characters using the form
 ### <TMPL_VAR varname ESCAPE="HTML">
 
-<div id="subscriptions" style="float: right">
+<div id="subscriptions">
 <h2>Subscriptions</h2>
 <ul>
 <TMPL_LOOP Channels>
@@ -77,6 +77,12 @@
 <div id="add_comment">
   <a href="/admin/constellation/comment/add/?group={{group.id}}&for_uri=<TMPL_VAR link ESCAPE="HTML">">
     Comment on this
+  </a>
+</div>
+
+<div id="add_comment">
+  <a href="/admin/constellation/link/add/?group={{group.id}}&uri=<TMPL_VAR link ESCAPE="HTML">">
+    Archive this
   </a>
 </div>
 
