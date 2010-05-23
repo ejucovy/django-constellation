@@ -19,6 +19,7 @@ setup(name='django-constellation',
       zip_safe=False,
       install_requires=[
         "planet",
+        "djangohelpers",
         ],
       dependency_links=[
         "http://www.planetplanet.org/download/planet-2.0.tar.bz2#egg=planet"
