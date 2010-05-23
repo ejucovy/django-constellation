@@ -12,7 +12,7 @@ from djangohelpers.lib import allow_http
 
 from django.contrib.auth.models import Group
 
-from constellation.models import Stream, Link, Comment
+from constellation.models import Stream, Link, Comment, Feed
 
 def stream(request, gid):
     stream = get_object_or_404(Stream, group__id=gid)
@@ -63,3 +63,10 @@ def group(request, gid):
 def index(request):
     streams = Stream.objects.all()
     return {'streams': streams}
+
+@allow_http("GET", "POST")
+@rendered_with('constellation/feeds.html')
+def feeds(request, gid):
+    group = get_object_or_404(Group, id=gid)
+    feeds = Feed.objects.filter(stream__group=group)
+    return {'feeds': feeds, 'group': group}
