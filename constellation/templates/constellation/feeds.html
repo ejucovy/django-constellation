@@ -1,0 +1,30 @@
+{% load constellation_comments %}
+
+<h1>Feed subscriptions for {{group.name}}</h1>
+
+{% can_comment by user in group as permission %}
+
+<ul>
+  {% for feed in feeds %}
+  <li>
+    <a href="{{feed.url}}">{{feed.title}}</a>
+    {% if permission %}
+    <form method="POST">
+      <input type="hidden" name="delete" value="1"></input>
+      <input type="hidden" name="feed_id" value="{{feed.id}}"></input>
+      <input type="submit" value="Remove this feed"></input>
+    </form>
+    {% endif %}
+  </li>
+  {% endfor %}
+</ul>
+
+{% if permission %}
+<h2>Add a new feed</h2>
+<form method="POST">
+  <input type="hidden" name="add" value="1"></input>
+  Title: <input type="text" name="feed_title"></input>
+  Feed URL: <input type="text" name="feed_url"></input>
+  <input type="submit" value="Add new feed"></input>
+</form>
+{% endif %}
