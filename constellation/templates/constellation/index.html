@@ -1,0 +1,19 @@
+<h1>Welcome to Constellation</h1>
+
+<p>Constellation manages Planets.</p>
+
+<ul>
+  <li>You can create new Planets through the web, attached to groups.</li>
+  <li>You can manage the set of feeds for each Planet through the web.</li>
+  <li>You can comment on individual items that pass through a Planet's river.</li>
+  <li>You can archive links from the items that pass through a Planet's river.</li>
+</ul>
+
+{% if streams %}
+<h2>Available environments here:</h2>
+<ol>
+  {% for stream in streams %}
+  <li><a href="{% url group stream.group.id %}">{{stream.group.name}}</a></li>
+  {% endfor %}
+</ol>
+{% endif %}

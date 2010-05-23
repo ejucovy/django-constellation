@@ -32,3 +32,8 @@ def links(request, gid):
 def group(request, gid):
     group = get_object_or_404(Group, id=gid)
     return {'group': group}
+
+@rendered_with('constellation/index.html')
+def index(request):
+    streams = Stream.objects.all()
+    return {'streams': streams}

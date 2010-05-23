@@ -8,5 +8,6 @@ urlpatterns = patterns('',
                            name="group_links"),
                        url(r'^group/(?P<gid>\d+)/$', 'constellation.views.group',
                            name="group"),
-
+                       url(r'^$', 'constellation.views.index',
+                           name="constellation_index"),
                        )
