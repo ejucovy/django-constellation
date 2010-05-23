@@ -65,11 +65,21 @@ site.register(Feed)
 site.register(Comment)
 site.register(Link)
 
+import constellation.settings
+
 def template_writer(sender, instance, created, **kwargs):
     stream = instance
+
+    try:
+        PLANET_TEMPLATE_FILES = settings.PLANET_TEMPLATE_FILES
+    except AttributeError:
+        PLANET_TEMPLATE_FILES = constellation.settings.PLANET_TEMPLATE_FILES
+
     context = {
         'stream': stream,
-        'settings': settings,
+        'PLANET_CACHE_DIR': settings.PLANET_CACHE_DIR,
+        'PLANET_TEMPLATE_FILES': PLANET_TEMPLATE_FILES,
+        'PLANET_OUTPUT_DIR': settings.PLANET_OUTPUT_DIR,
         }
     output = render_to_string('planet_config.ini',
                               context)
