@@ -2,7 +2,6 @@
 
 2. Add its provided template(s) to your TEMPLATE_DIRS::
 
-.. code-block: python
  from constellation.settings import TEMPLATE_DIR
  TEMPLATE_DIRS.insert(0, TEMPLATE_DIR)
 
