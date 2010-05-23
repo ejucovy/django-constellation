@@ -6,7 +6,10 @@
  from constellation.settings import TEMPLATE_DIR
  TEMPLATE_DIRS.insert(0, TEMPLATE_DIR)
 
-3. You must provide some Django settings:
+3. Include its URLConf 'constellation.urls' or wire up
+   your own
+
+4. You must provide some Django settings:
 
 PLANET_CONFIG_DIR: 
  Full path on filesystem to a directory where individual Planet
