@@ -74,17 +74,20 @@
 <h4><a href="<TMPL_VAR link ESCAPE="HTML">"><TMPL_VAR title></a></h4>
 </TMPL_IF>
 
+{% can_comment by user in group as permission %}
+{% if permission %}
 <div id="add_comment">
   <a href="/admin/constellation/comment/add/?group={{group.id}}&for_uri=<TMPL_VAR link ESCAPE="HTML">">
     Comment on this
   </a>
 </div>
 
-<div id="add_comment">
+<div id="add_link">
   <a href="/admin/constellation/link/add/?group={{group.id}}&uri=<TMPL_VAR link ESCAPE="HTML">">
     Archive this
   </a>
 </div>
+{% endif %}
 
 <div id="comments">
 {% get_comments for "<TMPL_VAR link ESCAPE="HTML">" in group as comments %}

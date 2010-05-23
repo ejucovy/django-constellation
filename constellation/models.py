@@ -37,9 +37,10 @@ class Stream(models.Model):
         template_writer(self)
         run_planet(self.config_file())
 
-    def render_to_response(self):
+    def render_to_response(self, extra_context):
         template = self.output_template()
         context = {'group': self.group}
+        context.update(extra_context)
         return render_to_response(template, context)
 
     def config_dir(self):

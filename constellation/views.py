@@ -17,7 +17,7 @@ from constellation.models import Stream, Link
 def stream(request, gid):
     stream = get_object_or_404(Stream, group__id=gid)
 
-    return stream.render_to_response()
+    return stream.render_to_response({'user': request.user})
 
     #return HttpResponse(open(stream.output_dir() + '/index.html').read())
 
