@@ -15,6 +15,9 @@ class Link(models.Model):
     uri = CharField()
     group = models.ForeignKey(Group)
 
+    def __unicode__(self):
+        return self.uri
+
 from django.conf import settings
 from django.shortcuts import render_to_response
 import subprocess
@@ -26,6 +29,9 @@ class Stream(models.Model):
     Represents a single Planet
     """
     group = models.ForeignKey(Group)
+
+    def __unicode__(self):
+        return self.group.name
 
     def update_planet(self):
         template_writer(self)
@@ -56,6 +62,9 @@ class Feed(models.Model):
     url = CharField()
     title = CharField()
     stream = models.ForeignKey(Stream)
+
+    def __unicode__(self):
+        return "%s <%s>" % (self.title, self.url)
 
 from django.template.loader import render_to_string
 
