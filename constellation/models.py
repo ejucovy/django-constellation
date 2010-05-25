@@ -57,7 +57,7 @@ class Stream(models.Model):
                             self.group.name)
 
     def output_template(self):
-        return 'planet_output/%s/index.html' % self.group.name
+        return 'planet_output/%s/fancy.html' % self.group.name
 
 class Feed(models.Model):
     url = CharField()
